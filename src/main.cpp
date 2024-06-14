@@ -1,17 +1,24 @@
-#include <windows.h>
+#include <filesystem>
+#include <fstream>
+#include <iostream>
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <iostream>
+#include <glm.hpp>
+#include <gtc/matrix_transform.hpp>
+#include <gtc/type_ptr.hpp>
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
 #include "shaderstrings.hpp"
+#include "debugging.hpp"
+#include "text.hpp"
+#include "renderer.hpp"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 unsigned int createShaders(const char* vertexShader, const char* fragmentShader);
-void glCheckErrors();
 
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
@@ -19,9 +26,10 @@ const unsigned int SCR_HEIGHT = 600;
 int main()
 {
 	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 
 	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
 	if (window == NULL)
@@ -39,58 +47,18 @@ int main()
 		return -1;
 	}
 
-
-	FT_Library ft;
-	if (FT_Init_FreeType(&ft))
-	{
-		return -1;
-	}
-
-
-	float positions[] = {
-		-0.5f, -0.5f,
-		0.5f, -0.5f,
-		0.5f, 0.5f,
-		-0.5f, 0.5f
-	};
-
-	unsigned int indices[] = {
-		0, 1, 2,
-		2, 3, 0
-	};
-
-	unsigned int buffer;
-	unsigned int VAO;
-	unsigned int ibo;
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
-
-	glGenBuffers(1, &buffer);
-	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW);
-
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
-
-	glGenBuffers(1, &ibo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	unsigned int program = createShaders(vertexShader, fragmentShader);
+	unsigned int program = createShaders(vertexShaderBasic, fragmentShaderBasic);
 	glUseProgram(program);
 	int location = glGetUniformLocation(program, "uColor");
 	glUniform4f(location, 0.2f, 0.3f, 0.8f, 1.0f);
 
+	Renderer renderer;
+
 	while (!glfwWindowShouldClose(window))
 	{
 		processInput(window);
-
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+		renderer.clear();
+		renderer.draw();
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
@@ -150,12 +118,4 @@ unsigned int createShaders(const char* vertexShader, const char* fragmentShader)
 	glDeleteShader(fs);
 
 	return program;
-}
-
-void glCheckErrors()
-{
-	while (GLenum error = glGetError())
-	{
-		std::cout << "OpenGL Error: " << error << std::endl;
-	}
 }
