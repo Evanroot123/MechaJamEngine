@@ -2,7 +2,8 @@
 
 #include <glad/glad.h>
 
-class FT_Face;
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 class Texture2D
 {

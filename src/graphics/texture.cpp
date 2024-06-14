@@ -3,8 +3,7 @@
 #include <iostream>
 #include "texture.hpp"
 
-#include <ft2build.h>
-#include FT_FREETYPE_H
+
 
 Texture2D::Texture2D()
 	: width(0), height(0), internalFormat(GL_RGB), imageFormat(GL_RGB), wrapS(GL_REPEAT), wrapT(GL_REPEAT), filterMin(GL_LINEAR), filterMax(GL_LINEAR)

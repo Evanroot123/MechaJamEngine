@@ -1,4 +1,4 @@
-#include "opengl_debugging.hpp"
+#include "debugging.hpp"
 #include <iostream>
 
 void __stdcall glDebugOutput(GLenum source, GLenum type, unsigned int id, GLenum severity, GLsizei length, const char* message, const void* userParam)

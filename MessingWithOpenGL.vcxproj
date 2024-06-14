@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\graphics;$(ProjectDir)shaders;$(ProjectDir)dependencies\glad\include\KHR;$(ProjectDir)dependencies\glad\include;$(ProjectDir)dependencies\freetype\include;$(ProjectDir)dependencies\glm;$(ProjectDir)dependencies\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\platform;$(ProjectDir)src\graphics;$(ProjectDir)shaders;$(ProjectDir)dependencies\glad\include\KHR;$(ProjectDir)dependencies\glad\include;$(ProjectDir)dependencies\freetype\include;$(ProjectDir)dependencies\glm;$(ProjectDir)dependencies\glfw\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -124,7 +124,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\graphics;$(ProjectDir)shaders;$(ProjectDir)dependencies\glad\include\KHR;$(ProjectDir)dependencies\glad\include;$(ProjectDir)dependencies\freetype\include;$(ProjectDir)dependencies\glm;$(ProjectDir)dependencies\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\platform;$(ProjectDir)src\graphics;$(ProjectDir)shaders;$(ProjectDir)dependencies\glad\include\KHR;$(ProjectDir)dependencies\glad\include;$(ProjectDir)dependencies\freetype\include;$(ProjectDir)dependencies\glm;$(ProjectDir)dependencies\glfw\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -140,17 +140,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dependencies\glad\src\glad.c" />
-    <ClCompile Include="src\graphics\opengl_debugging.cpp" />
+    <ClCompile Include="src\graphics\buffer.cpp" />
+    <ClCompile Include="src\graphics\debugging.cpp" />
+    <ClCompile Include="src\graphics\renderer.cpp" />
     <ClCompile Include="src\graphics\shader.cpp" />
     <ClCompile Include="src\graphics\text.cpp" />
     <ClCompile Include="src\graphics\texture.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\platform\window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\graphics\opengl_debugging.hpp" />
+    <ClInclude Include="src\graphics\buffer.hpp" />
+    <ClInclude Include="src\graphics\debugging.hpp" />
+    <ClInclude Include="src\graphics\renderer.hpp" />
     <ClInclude Include="src\graphics\shader.hpp" />
     <ClInclude Include="src\graphics\text.hpp" />
     <ClInclude Include="src\graphics\texture.hpp" />
+    <ClInclude Include="src\platform\window.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
