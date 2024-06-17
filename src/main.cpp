@@ -21,7 +21,7 @@ int main()
 	{
 		window.processInput();
 		renderer.clear();
-		renderer.draw();
+		renderer.draw(gameObjects);
 		window.swapBuffers();
 	}
 
