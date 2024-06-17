@@ -43,7 +43,7 @@ void Renderer::clear()
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void Renderer::draw()
+void Renderer::draw(std::vector<GameObject>& objects)
 {
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 }

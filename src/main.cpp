@@ -1,5 +1,6 @@
 #include "renderer.hpp"
 #include "window.hpp"
+#include "gameobject.hpp"
 
 int main()
 {
@@ -8,6 +9,13 @@ int main()
 
 	Renderer renderer;
 	renderer.init();
+
+	GameObject shiboopy;
+	shiboopy.posX = 50;
+	shiboopy.posY = 50;
+
+	std::vector<GameObject> gameObjects;
+	gameObjects.push_back(shiboopy);
 
 	while (window.isOpen())
 	{

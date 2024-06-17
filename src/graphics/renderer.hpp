@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "shader.hpp"
+#include "gameobject.hpp"
 
 enum ShaderPrograms
 {
@@ -15,7 +16,7 @@ public:
 	void enableDebugContext();
 	void init();
 	void clear();
-	void draw();
+	void draw(std::vector<GameObject>& objects);
 
 private:
 	std::vector<Shader> shaders;
