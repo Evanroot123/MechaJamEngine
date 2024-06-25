@@ -1,6 +1,6 @@
-#include "buffer.hpp"
+#include "batchedbuffer.hpp"
 
-void Buffer::generateBatched()
+void BatchedBuffer::generateBatched()
 {
 	unsigned int vertexSize = 4;
 
@@ -15,12 +15,12 @@ void Buffer::generateBatched()
 	//glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
 }
 
-void Buffer::generateFixed(unsigned int numVertices)
+void BatchedBuffer::generateFixed(unsigned int numVertices)
 {
 
 }
 
-void Buffer::attributePointer(GLuint index, GLint numComponents, GLenum type, GLboolean normalized, GLsizei stride, GLvoid* data)
+void BatchedBuffer::attributePointer(GLuint index, GLint numComponents, GLenum type, GLboolean normalized, GLsizei stride, GLvoid* data)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glEnableVertexAttribArray(index);
@@ -28,20 +28,20 @@ void Buffer::attributePointer(GLuint index, GLint numComponents, GLenum type, GL
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void Buffer::attributePointerNoBind(GLuint index, GLint numComponents, GLenum type, GLboolean normalized, GLsizei stride, GLvoid* data)
+void BatchedBuffer::attributePointerNoBind(GLuint index, GLint numComponents, GLenum type, GLboolean normalized, GLsizei stride, GLvoid* data)
 {
 	glEnableVertexAttribArray(index);
 	glVertexAttribPointer(index, numComponents, type, normalized, stride, data);
 }
 
-void Buffer::bufferData()
+void BatchedBuffer::bufferData()
 {
 	unsigned int vertexCount = 0;
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float) * vertexCount, nullptr);
 }
 
-void Buffer::bind()
+void BatchedBuffer::bind()
 {
 	glBindVertexArray(vao);
 }

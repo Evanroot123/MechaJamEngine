@@ -1,10 +1,7 @@
 #pragma once
 #include <glad/glad.h>
 
-
-// for now this class will serve multiple roles: batched buffer, fixed buffer
-// based on how functions are called. later can break these down into separate classes
-class Buffer
+class BatchedBuffer
 {
 public:
 	unsigned int vao;

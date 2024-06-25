@@ -5,7 +5,7 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-class Texture2D
+class Texture
 {
 public:
 	unsigned int id;
@@ -19,7 +19,7 @@ public:
 
 	unsigned int currentUnpackAlignment = 4;
 
-	Texture2D();
+	Texture();
 	void generate(unsigned int width, unsigned int height, unsigned char* data);
 	void generateText(FT_Face& face);
 	void bind() const;

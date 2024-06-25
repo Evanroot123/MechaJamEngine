@@ -100,13 +100,19 @@ void Shader::setVector4f(const char* name, const glm::vec4& value, bool useShade
 	glUniform4f(glGetUniformLocation(this->id, name), value.x, value.y, value.z, value.w);
 }
 
+void Shader::setMatrix3(const char* name, const glm::mat3& matrix, bool useShader)
+{
+	if (useShader)
+		this->use();
+	glUniformMatrix3fv(glGetUniformLocation(this->id, name), 1, false, glm::value_ptr(matrix));
+}
+
 void Shader::setMatrix4(const char* name, const glm::mat4& matrix, bool useShader)
 {
 	if (useShader)
 		this->use();
 	glUniformMatrix4fv(glGetUniformLocation(this->id, name), 1, false, glm::value_ptr(matrix));
 }
-
 
 void Shader::checkCompileErrors(unsigned int object, std::string type)
 {

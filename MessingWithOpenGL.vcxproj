@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\game;$(ProjectDir)src\platform;$(ProjectDir)src\graphics;$(ProjectDir)shaders;$(ProjectDir)dependencies\glad\include\KHR;$(ProjectDir)dependencies\glad\include;$(ProjectDir)dependencies\freetype\include;$(ProjectDir)dependencies\glm;$(ProjectDir)dependencies\glfw\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)dependencies\stb;$(ProjectDir)src\game;$(ProjectDir)src\platform;$(ProjectDir)src\graphics;$(ProjectDir)shaders;$(ProjectDir)dependencies\glad\include\KHR;$(ProjectDir)dependencies\glad\include;$(ProjectDir)dependencies\freetype\include;$(ProjectDir)dependencies\glm;$(ProjectDir)dependencies\glfw\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -114,6 +114,8 @@
       <AdditionalDependencies>opengl32.lib;glfw3.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>
       </EntryPointSymbol>
+      <StackReserveSize>
+      </StackReserveSize>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -124,7 +126,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\game;$(ProjectDir)src\platform;$(ProjectDir)src\graphics;$(ProjectDir)shaders;$(ProjectDir)dependencies\glad\include\KHR;$(ProjectDir)dependencies\glad\include;$(ProjectDir)dependencies\freetype\include;$(ProjectDir)dependencies\glm;$(ProjectDir)dependencies\glfw\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)dependencies\stb;$(ProjectDir)src\game;$(ProjectDir)src\platform;$(ProjectDir)src\graphics;$(ProjectDir)shaders;$(ProjectDir)dependencies\glad\include\KHR;$(ProjectDir)dependencies\glad\include;$(ProjectDir)dependencies\freetype\include;$(ProjectDir)dependencies\glm;$(ProjectDir)dependencies\glfw\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -136,28 +138,34 @@
       <AdditionalDependencies>opengl32.lib;glfw3.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>
       </EntryPointSymbol>
+      <StackReserveSize>
+      </StackReserveSize>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dependencies\glad\src\glad.c" />
     <ClCompile Include="src\game\gameobject.cpp" />
-    <ClCompile Include="src\graphics\buffer.cpp" />
+    <ClCompile Include="src\graphics\batchedbuffer.cpp" />
+    <ClCompile Include="src\graphics\fixedbuffer.cpp" />
     <ClCompile Include="src\graphics\debugging.cpp" />
     <ClCompile Include="src\graphics\renderer.cpp" />
     <ClCompile Include="src\graphics\shader.cpp" />
     <ClCompile Include="src\graphics\text.cpp" />
     <ClCompile Include="src\graphics\texture.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\platform\resourcemanager.cpp" />
     <ClCompile Include="src\platform\window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game\gameobject.hpp" />
-    <ClInclude Include="src\graphics\buffer.hpp" />
+    <ClInclude Include="src\graphics\batchedbuffer.hpp" />
+    <ClInclude Include="src\graphics\fixedbuffer.hpp" />
     <ClInclude Include="src\graphics\debugging.hpp" />
     <ClInclude Include="src\graphics\renderer.hpp" />
     <ClInclude Include="src\graphics\shader.hpp" />
     <ClInclude Include="src\graphics\text.hpp" />
     <ClInclude Include="src\graphics\texture.hpp" />
+    <ClInclude Include="src\platform\resourcemanager.hpp" />
     <ClInclude Include="src\platform\window.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

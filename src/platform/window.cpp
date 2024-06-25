@@ -31,6 +31,9 @@ void Window::init(int width, int height)
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return;
 	}
+	
+	screenWidth = width;
+	screenHeight = height;
 }
 
 bool Window::isOpen()

@@ -33,13 +33,22 @@
     <ClCompile Include="src\graphics\text.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\buffer.cpp">
+    <ClCompile Include="src\graphics\fixedbuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\graphics\renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\platform\window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\gameobject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\platform\resourcemanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\batchedbuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,13 +65,22 @@
     <ClInclude Include="src\graphics\text.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\buffer.hpp">
+    <ClInclude Include="src\graphics\fixedbuffer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\graphics\renderer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\platform\window.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\gameobject.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\platform\resourcemanager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\batchedbuffer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,6 +1,9 @@
+#include <iostream>
+
 #include "renderer.hpp"
 #include "window.hpp"
 #include "gameobject.hpp"
+#include "resourcemanager.hpp"
 
 int main()
 {
@@ -8,20 +11,25 @@ int main()
 	window.init(800, 600);
 
 	Renderer renderer;
-	renderer.init();
+	renderer.init(&window);
+	//renderer.getGPUInfo();
+
+	ResourceManager::loadTexture("resources\\textures\\green-circle.png", false, "shiboopy");
 
 	GameObject shiboopy;
 	shiboopy.posX = 50;
 	shiboopy.posY = 50;
-
-	std::vector<GameObject> gameObjects;
-	gameObjects.push_back(shiboopy);
+	shiboopy.texture = &ResourceManager::textures["shiboopy"];
+	shiboopy.sizeX = shiboopy.texture->width;
+	shiboopy.sizeY = shiboopy.texture->height;
 
 	while (window.isOpen())
 	{
 		window.processInput();
 		renderer.clear();
-		renderer.draw(gameObjects);
+		renderer.startFrame();
+		renderer.drawSprite(shiboopy);
+		renderer.endFrame();
 		window.swapBuffers();
 	}
 
