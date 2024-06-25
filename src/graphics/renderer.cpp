@@ -54,8 +54,6 @@ void Renderer::init(Window* window)
 	};
 
 	spriteBuffer.generate(vertices, sizeof(vertices) / sizeof(vertices[0]));
-
-	
 }
 
 void Renderer::clear()
@@ -66,11 +64,13 @@ void Renderer::clear()
 
 void Renderer::startFrame()
 {
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	shaders[SINGLE_SPRITE].use();
 	glm::mat4 view = glm::mat4(1.0f);
 	view = glm::translate(view, glm::vec3(cameraPosition.x, cameraPosition.y, 0));
 	shaders[SINGLE_SPRITE].setMatrix4("view", view, false);
-	glm::mat4 projection = glm::ortho(0.0f, (float)window->screenWidth, 0.0f, (float)window->screenHeight, 0.1f, 100.0f);
+	glm::mat4 projection = glm::ortho(0.0f, (float)window->screenWidth, 0.0f, (float)window->screenHeight, -1.0f, 1.0f);
 	shaders[SINGLE_SPRITE].setMatrix4("projection", projection, false);
 }
 
@@ -89,14 +89,13 @@ void Renderer::draw(std::vector<GameObject>& objects)
 void Renderer::drawSprite(GameObject& object)
 {
 	shaders[SINGLE_SPRITE].use();
-	glm::mat4 model = glm::mat3(1.0f);
+	glActiveTexture(GL_TEXTURE1);
+	object.texture->bind();
+	shaders[SINGLE_SPRITE].setInteger("image", object.texture->id);
+	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::translate(model, glm::vec3(object.posX, object.posY, 0));
 	model = glm::scale(model, glm::vec3(object.sizeX, object.sizeY, 1));
-	shaders[SINGLE_SPRITE].setMatrix4("model2", model, false);
-	glActiveTexture(GL_TEXTURE0);
-	
-	object.texture->bind();
-	shaders[SINGLE_SPRITE].setInteger("image2", object.texture->id, false);
+	shaders[SINGLE_SPRITE].setMatrix4("model", model, false);
 	spriteBuffer.bind();
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
