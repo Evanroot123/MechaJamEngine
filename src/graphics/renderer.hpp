@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include "shader.hpp"
-#include "fixedbuffer.hpp"
+#include "buffers.hpp"
 #include "gameobject.hpp"
 #include "window.hpp"
 
@@ -9,6 +9,7 @@ enum ShaderPrograms
 {
 	TEXT,
 	SINGLE_SPRITE,
+	INSTANCE_SPRITE,
 };
 
 class Renderer
@@ -22,11 +23,12 @@ public:
 	void clear();
 	void startFrame();
 	void endFrame();
-	void draw(std::vector<GameObject>& objects);
+	void drawBatched(std::vector<GameObject>& objects);
 	void drawSprite(GameObject& object);
 
 private:
 	std::vector<Shader> shaders;
-	FixedBuffer spriteBuffer;
+	FixedQuadBuffer spriteBuffer;
+	InstancedQuadBuffer instanceBuffer;
 	Window* window;
 };

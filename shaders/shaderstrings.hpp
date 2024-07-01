@@ -65,11 +65,41 @@ uniform mat4 projection;
 void main()
 {
 	texCoords = vertex.zw;
-	gl_Position = projection * model * vec4(vertex.xy, 0.0, 1.0);
+	gl_Position = projection * view * model * vec4(vertex.xy, 0.0, 1.0);
 }
 )";
 
 const char* singleSpriteFragment = R"(
+#version 330 core
+in vec2 texCoords;
+out vec4 color;
+
+uniform sampler2D image;
+
+void main()
+{
+	color = texture(image, texCoords);
+}
+)";
+
+const char* instancedSpriteVertex = R"(
+#version 330 core
+layout (location = 0) in vec4 vertex;
+layout (location = 1) in mat4 model;
+
+out vec2 texCoords;
+
+uniform mat4 view;
+uniform mat4 projection;
+
+void main()
+{
+	texCoords = vertex.zw;
+	gl_Position = projection * view * model * vec4(vertex.xy, 0.0, 1.0);
+}
+)";
+
+const char* instancedSpriteFragment = R"(
 #version 330 core
 in vec2 texCoords;
 out vec4 color;

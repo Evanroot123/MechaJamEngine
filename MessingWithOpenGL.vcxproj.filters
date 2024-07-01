@@ -33,9 +33,6 @@
     <ClCompile Include="src\graphics\text.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\fixedbuffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\graphics\renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -48,7 +45,7 @@
     <ClCompile Include="src\platform\resourcemanager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\batchedbuffer.cpp">
+    <ClCompile Include="src\graphics\buffers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -65,9 +62,6 @@
     <ClInclude Include="src\graphics\text.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\fixedbuffer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\graphics\renderer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -80,7 +74,7 @@
     <ClInclude Include="src\platform\resourcemanager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\batchedbuffer.hpp">
+    <ClInclude Include="src\graphics\buffers.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

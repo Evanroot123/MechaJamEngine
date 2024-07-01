@@ -145,8 +145,7 @@
   <ItemGroup>
     <ClCompile Include="dependencies\glad\src\glad.c" />
     <ClCompile Include="src\game\gameobject.cpp" />
-    <ClCompile Include="src\graphics\batchedbuffer.cpp" />
-    <ClCompile Include="src\graphics\fixedbuffer.cpp" />
+    <ClCompile Include="src\graphics\buffers.cpp" />
     <ClCompile Include="src\graphics\debugging.cpp" />
     <ClCompile Include="src\graphics\renderer.cpp" />
     <ClCompile Include="src\graphics\shader.cpp" />
@@ -158,8 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game\gameobject.hpp" />
-    <ClInclude Include="src\graphics\batchedbuffer.hpp" />
-    <ClInclude Include="src\graphics\fixedbuffer.hpp" />
+    <ClInclude Include="src\graphics\buffers.hpp" />
     <ClInclude Include="src\graphics\debugging.hpp" />
     <ClInclude Include="src\graphics\renderer.hpp" />
     <ClInclude Include="src\graphics\shader.hpp" />

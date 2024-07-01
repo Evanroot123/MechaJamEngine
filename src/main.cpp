@@ -22,13 +22,18 @@ int main()
 	shiboopy.texture = &ResourceManager::textures["shiboopy"];
 	shiboopy.sizeX = shiboopy.texture->width;
 	shiboopy.sizeY = shiboopy.texture->height;
+
+	std::vector<GameObject> objects{ shiboopy };
     
 	while (window.isOpen())
 	{
 		window.processInput();
 		renderer.clear();
 		renderer.startFrame();
-		renderer.drawSprite(shiboopy);
+
+		//renderer.drawSprite(shiboopy);
+		renderer.drawBatched(objects);
+
 		renderer.endFrame();
 		window.swapBuffers();
 	}
