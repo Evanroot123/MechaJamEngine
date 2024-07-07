@@ -34,9 +34,9 @@ private:
 class InstancedQuadBuffer
 {
 public:
-	unsigned int vao;
-	unsigned int vertexVbo;
-	unsigned int instanceVbo;
+	unsigned int vao = 0;
+	unsigned int vertexVbo = 0;
+	unsigned int instanceVbo = 0;
 	int vertexCount = 0;
 
 	void generate(float* vertices, int numVertices);
@@ -44,8 +44,10 @@ public:
 	void pushVertex(glm::mat4& transform);
 	void flush();
 	void bind();
+	InstancedQuadBuffer();
+	~InstancedQuadBuffer();
 
 private:
-	int vertexCapacity = 1000;
-	glm::mat4 vertexData[1000];
+	int vertexCapacity = 10000;
+	glm::mat4* vertexData;
 };

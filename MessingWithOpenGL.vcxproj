@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)dependencies\stb;$(ProjectDir)src\game;$(ProjectDir)src\platform;$(ProjectDir)src\graphics;$(ProjectDir)shaders;$(ProjectDir)dependencies\glad\include\KHR;$(ProjectDir)dependencies\glad\include;$(ProjectDir)dependencies\freetype\include;$(ProjectDir)dependencies\glm;$(ProjectDir)dependencies\glfw\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)dependencies\imgui;$(ProjectDir)src\utility;$(ProjectDir)dependencies\stb;$(ProjectDir)src\game;$(ProjectDir)src\platform;$(ProjectDir)src\graphics;$(ProjectDir)shaders;$(ProjectDir)dependencies\glad\include\KHR;$(ProjectDir)dependencies\glad\include;$(ProjectDir)dependencies\freetype\include;$(ProjectDir)dependencies\glm;$(ProjectDir)dependencies\glfw\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -126,7 +126,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)dependencies\stb;$(ProjectDir)src\game;$(ProjectDir)src\platform;$(ProjectDir)src\graphics;$(ProjectDir)shaders;$(ProjectDir)dependencies\glad\include\KHR;$(ProjectDir)dependencies\glad\include;$(ProjectDir)dependencies\freetype\include;$(ProjectDir)dependencies\glm;$(ProjectDir)dependencies\glfw\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)dependencies\imgui;$(ProjectDir)src\utility;$(ProjectDir)dependencies\stb;$(ProjectDir)src\game;$(ProjectDir)src\platform;$(ProjectDir)src\graphics;$(ProjectDir)shaders;$(ProjectDir)dependencies\glad\include\KHR;$(ProjectDir)dependencies\glad\include;$(ProjectDir)dependencies\freetype\include;$(ProjectDir)dependencies\glm;$(ProjectDir)dependencies\glfw\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -144,6 +144,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dependencies\glad\src\glad.c" />
+    <ClCompile Include="dependencies\imgui\imgui.cpp" />
+    <ClCompile Include="dependencies\imgui\imgui_demo.cpp" />
+    <ClCompile Include="dependencies\imgui\imgui_draw.cpp" />
+    <ClCompile Include="dependencies\imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="dependencies\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="dependencies\imgui\imgui_tables.cpp" />
+    <ClCompile Include="dependencies\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\game\gameobject.cpp" />
     <ClCompile Include="src\graphics\buffers.cpp" />
     <ClCompile Include="src\graphics\debugging.cpp" />
@@ -154,6 +161,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\platform\resourcemanager.cpp" />
     <ClCompile Include="src\platform\window.cpp" />
+    <ClCompile Include="src\utility\stopwatch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game\gameobject.hpp" />
@@ -165,6 +173,7 @@
     <ClInclude Include="src\graphics\texture.hpp" />
     <ClInclude Include="src\platform\resourcemanager.hpp" />
     <ClInclude Include="src\platform\window.hpp" />
+    <ClInclude Include="src\utility\stopwatch.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

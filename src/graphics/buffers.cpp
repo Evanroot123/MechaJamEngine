@@ -120,3 +120,13 @@ void InstancedQuadBuffer::bind()
 {
 	glBindVertexArray(vao);
 }
+
+InstancedQuadBuffer::InstancedQuadBuffer()
+{
+	vertexData = new glm::mat4[vertexCapacity];
+}
+
+InstancedQuadBuffer::~InstancedQuadBuffer()
+{
+	delete[] vertexData;
+}

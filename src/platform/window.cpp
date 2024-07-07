@@ -1,7 +1,9 @@
 #include "window.hpp"
 #include <iostream>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
 
 void framebufferSizeCallback(GLFWwindow* window, int width, int height)
 {
@@ -34,6 +36,18 @@ void Window::init(int width, int height)
 	
 	screenWidth = width;
 	screenHeight = height;
+
+	// Initialize ImGui context
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+	// Setup Platform/Renderer bindings
+	ImGui_ImplGlfw_InitForOpenGL(window, true);
+	ImGui_ImplOpenGL3_Init("#version 430"); // Replace #version 130 with your OpenGL version
+
+	// Setup Dear ImGui style
+	ImGui::StyleColorsDark();
 }
 
 bool Window::isOpen()

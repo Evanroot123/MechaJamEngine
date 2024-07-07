@@ -54,9 +54,20 @@ void Renderer::init(Window* window)
 		0.5f, -0.5f, 1.0f, 0.0f
 	};
 
+	float textVertices[] = {
+		-0.5f, 0.5f, 0.0f, 0.0f,
+		0.5f, -0.5f, 1.0f, 1.0f,
+		-0.5f, -0.5f, 0.0f, 1.0f,
+		-0.5f, 0.5f, 0.0f, 0.0f,
+		0.5f, 0.5f, 1.0f, 0.0f,
+		0.5f, -0.5f, 1.0f, 1.0f
+	};
+
 	spriteBuffer.generate(vertices, sizeof(vertices) / sizeof(vertices[0]));
 	spriteBuffer.attributePointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
 	instanceBuffer.generate(vertices, sizeof(vertices) / sizeof(vertices[0]));
+
+	// make instanced text buffer
 }
 
 void Renderer::clear()
@@ -67,6 +78,7 @@ void Renderer::clear()
 
 void Renderer::startFrame()
 {
+	//glEnable(GL_CULL_FACE);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	shaders[SINGLE_SPRITE].use();
@@ -79,6 +91,10 @@ void Renderer::startFrame()
 	shaders[INSTANCE_SPRITE].use();
 	shaders[INSTANCE_SPRITE].setMatrix4("view", view, false);
 	shaders[INSTANCE_SPRITE].setMatrix4("projection", projection, false);
+
+	shaders[SINGLE_TEXT].use();
+	shaders[SINGLE_TEXT].setMatrix4("view", view, false);
+	shaders[SINGLE_TEXT].setMatrix4("projection", projection, false);
 }
 
 void Renderer::endFrame()
@@ -86,7 +102,7 @@ void Renderer::endFrame()
 
 }
 
-void Renderer::drawBatched(std::vector<GameObject>& objects)
+void Renderer::drawBatched(const std::vector<GameObject>& objects)
 {
 	if (objects.size() <= 0)
 		return;
@@ -108,7 +124,7 @@ void Renderer::drawBatched(std::vector<GameObject>& objects)
 	instanceBuffer.flush();
 }
 
-void Renderer::drawSprite(GameObject& object)
+void Renderer::drawSprite(const GameObject& object)
 {
 	shaders[SINGLE_SPRITE].use();
 	glActiveTexture(GL_TEXTURE0);
@@ -120,4 +136,26 @@ void Renderer::drawSprite(GameObject& object)
 	shaders[SINGLE_SPRITE].setMatrix4("model", model, false);
 	spriteBuffer.bind();
 	glDrawArrays(GL_TRIANGLES, 0, 6);
+}
+
+void Renderer::drawText(const Character& character, glm::vec2 position)
+{
+	shaders[SINGLE_TEXT].use();
+	glActiveTexture(GL_TEXTURE0);
+	character.texture.bind();
+	shaders[SINGLE_TEXT].setInteger("text", 0);
+	shaders[SINGLE_TEXT].setVector3f("textColor", 1.0f, 1.0f, 1.0f);
+	glm::mat4 model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(position.x, position.y, 0));
+	model = glm::scale(model, glm::vec3(character.size.x, character.size.y, 1));
+	shaders[SINGLE_TEXT].setMatrix4("model", model, false);
+	spriteBuffer.bind();
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+}
+
+void Renderer::drawText(std::string text, glm::vec2 pos, float scale, glm::vec3 color)
+{
+	shaders[SINGLE_TEXT].use();
+	glActiveTexture(GL_TEXTURE0);
+
 }

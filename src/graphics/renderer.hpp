@@ -4,10 +4,11 @@
 #include "buffers.hpp"
 #include "gameobject.hpp"
 #include "window.hpp"
+#include "text.hpp"
 
 enum ShaderPrograms
 {
-	TEXT,
+	SINGLE_TEXT,
 	SINGLE_SPRITE,
 	INSTANCE_SPRITE,
 };
@@ -23,8 +24,10 @@ public:
 	void clear();
 	void startFrame();
 	void endFrame();
-	void drawBatched(std::vector<GameObject>& objects);
-	void drawSprite(GameObject& object);
+	void drawBatched(const std::vector<GameObject>& objects);
+	void drawSprite(const GameObject& object);
+	void drawText(const Character& character, glm::vec2 position);
+	void drawText(std::string text, glm::vec2 pos, float scale, glm::vec3 color);
 
 private:
 	std::vector<Shader> shaders;

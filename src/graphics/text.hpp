@@ -1,9 +1,11 @@
 #pragma once
 
 #include <glm.hpp>
+#include <map>
+#include "texture.hpp"
 
 struct Character {
-	unsigned int textureID;
+	Texture texture;
 	glm::ivec2 size;
 	glm::ivec2 bearing;
 	unsigned int advance;
@@ -11,5 +13,7 @@ struct Character {
 
 class Text
 {
+public:
 	void loadCharacters();
+	std::map<char, Character> characters;
 };
