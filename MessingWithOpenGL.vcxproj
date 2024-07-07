@@ -161,6 +161,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\platform\resourcemanager.cpp" />
     <ClCompile Include="src\platform\window.cpp" />
+    <ClCompile Include="src\utility\rectangle.cpp" />
     <ClCompile Include="src\utility\stopwatch.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -173,6 +174,7 @@
     <ClInclude Include="src\graphics\texture.hpp" />
     <ClInclude Include="src\platform\resourcemanager.hpp" />
     <ClInclude Include="src\platform\window.hpp" />
+    <ClInclude Include="src\utility\rectangle.hpp" />
     <ClInclude Include="src\utility\stopwatch.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -4,7 +4,9 @@
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
 # my stuff
-resources/
+*.png
+*.jpg
+*.ttf
 
 # User-specific files
 *.rsuser

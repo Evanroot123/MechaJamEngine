@@ -22,5 +22,6 @@ public:
 	Texture();
 	void generate(unsigned int width, unsigned int height, unsigned char* data);
 	void generateText(FT_Face& face);
+	void generateText2(FT_Face& face);
 	void bind() const;
 };

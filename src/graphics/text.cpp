@@ -28,7 +28,7 @@ void Text::loadCharacters()
 	}
 
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	for (unsigned char c = 32; c < 128; c++)
+	for (unsigned char c = 33; c < 128; c++)
 	{
 		if (FT_Load_Char(face, c, FT_LOAD_RENDER))
 		{
@@ -38,7 +38,8 @@ void Text::loadCharacters()
 		//std::cout << c << ": " << face->glyph->bitmap.width << ", " << face->glyph->bitmap.rows << "\n";
 
 		Texture texture;
-		texture.generateText(face);
+		//texture.generateText(face);
+		texture.generateText2(face);
 
 		Character character = {
 			texture, glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
