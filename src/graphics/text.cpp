@@ -89,7 +89,7 @@ void Text::loadBatchedCharacters()
 		if (currentX + face->glyph->bitmap.width > rectangle.width)
 		{
 			currentX = 0;
-			currentY += currentRowHeight + 5;
+			currentY += currentRowHeight + 1;
 			currentRowHeight = 0;
 		}
 
@@ -99,7 +99,7 @@ void Text::loadBatchedCharacters()
 			CharacterBatched character = { {currentX, currentY}, glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows), 
 				glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top), face->glyph->advance.x };
 			batchedCharacters.insert(std::pair<char, CharacterBatched>(c, character));
-			currentX += face->glyph->bitmap.width + 5;
+			currentX += face->glyph->bitmap.width + 1;
 		}
 		else
 		{

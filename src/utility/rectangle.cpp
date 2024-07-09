@@ -1,8 +1,10 @@
 #include "rectangle.hpp"
+#include <cstring>
 
 Rectangle::Rectangle(int width, int height) : width(width), height(height)
 {
 	data = new unsigned char[width * height];
+	memset(data, 0, width * height);
 }
 
 Rectangle::~Rectangle()

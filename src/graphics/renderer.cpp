@@ -56,22 +56,13 @@ void Renderer::init(Window* window)
 		0.5f, -0.5f, 1.0f, 0.0f
 	};
 
-	//float textVertices[] = {
-	//	-0.5f, 0.5f, 0.0f, 0.0f,
-	//	0.5f, -0.5f, 1.0f, 1.0f,
-	//	-0.5f, -0.5f, 0.0f, 1.0f,
-	//	-0.5f, 0.5f, 0.0f, 0.0f,
-	//	0.5f, 0.5f, 1.0f, 0.0f,
-	//	0.5f, -0.5f, 1.0f, 1.0f
-	//};
-
 	float textVertices[] = {
-		-0.5f, 0.5f, 0.0001f, 0.0001f,
-		0.5f, -0.5f, 0.9999f, 0.9999f,
-		-0.5f, -0.5f, 0.0001f, 0.9999f,
-		-0.5f, 0.5f, 0.0001f, 0.0001f,
-		0.5f, 0.5f, 0.9999f, 0.0001f,
-		0.5f, -0.5f, 0.9999f, 0.9999f
+		-0.5f, 0.5f, 0.0f, 0.0f,
+		0.5f, -0.5f, 1.0f, 1.0f,
+		-0.5f, -0.5f, 0.0f, 1.0f,
+		-0.5f, 0.5f, 0.0f, 0.0f,
+		0.5f, 0.5f, 1.0f, 0.0f,
+		0.5f, -0.5f, 1.0f, 1.0f
 	};
 
 	spriteBuffer.generate(vertices, sizeof(vertices) / sizeof(vertices[0]));
