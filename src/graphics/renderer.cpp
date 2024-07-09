@@ -40,6 +40,8 @@ void Renderer::init(Window* window)
 	Shader shader;
 	shader.compile(vertexShaderGlyph, fragmentShaderGlyph);
 	shaders.push_back(shader);
+	shader.compile(instanceGlyphVertexShader, instanceGlyphFragmentShader);
+	shaders.push_back(shader);
 	shader.compile(singleSpriteVertex, singleSpriteFragment);
 	shaders.push_back(shader);
 	shader.compile(instancedSpriteVertex, instancedSpriteFragment);
@@ -54,18 +56,34 @@ void Renderer::init(Window* window)
 		0.5f, -0.5f, 1.0f, 0.0f
 	};
 
+	//float textVertices[] = {
+	//	-0.5f, 0.5f, 0.0f, 0.0f,
+	//	0.5f, -0.5f, 1.0f, 1.0f,
+	//	-0.5f, -0.5f, 0.0f, 1.0f,
+	//	-0.5f, 0.5f, 0.0f, 0.0f,
+	//	0.5f, 0.5f, 1.0f, 0.0f,
+	//	0.5f, -0.5f, 1.0f, 1.0f
+	//};
+
 	float textVertices[] = {
-		-0.5f, 0.5f, 0.0f, 0.0f,
-		0.5f, -0.5f, 1.0f, 1.0f,
-		-0.5f, -0.5f, 0.0f, 1.0f,
-		-0.5f, 0.5f, 0.0f, 0.0f,
-		0.5f, 0.5f, 1.0f, 0.0f,
-		0.5f, -0.5f, 1.0f, 1.0f
+		-0.5f, 0.5f, 0.0001f, 0.0001f,
+		0.5f, -0.5f, 0.9999f, 0.9999f,
+		-0.5f, -0.5f, 0.0001f, 0.9999f,
+		-0.5f, 0.5f, 0.0001f, 0.0001f,
+		0.5f, 0.5f, 0.9999f, 0.0001f,
+		0.5f, -0.5f, 0.9999f, 0.9999f
 	};
 
 	spriteBuffer.generate(vertices, sizeof(vertices) / sizeof(vertices[0]));
 	spriteBuffer.attributePointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+	textBuffer.generate(textVertices, sizeof(textVertices) / sizeof(textVertices[0]));
+	textBuffer.attributePointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
 	instanceBuffer.generate(vertices, sizeof(vertices) / sizeof(vertices[0]));
+	instanceBuffer.attributePointerMat4(1, 0);
+	textInstanceBuffer.generate(textVertices, sizeof(textVertices) / sizeof(textVertices[0]));
+	textInstanceBuffer.attributePointer(1, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+	textInstanceBuffer.attributePointerMat4(2, sizeof(float) * 4);
+	
 
 	// make instanced text buffer
 }
@@ -95,6 +113,10 @@ void Renderer::startFrame()
 	shaders[SINGLE_TEXT].use();
 	shaders[SINGLE_TEXT].setMatrix4("view", view, false);
 	shaders[SINGLE_TEXT].setMatrix4("projection", projection, false);
+
+	shaders[INSTANCE_TEXT].use();
+	shaders[INSTANCE_TEXT].setMatrix4("view", view, false);
+	shaders[INSTANCE_TEXT].setMatrix4("projection", projection, false);
 }
 
 void Renderer::endFrame()
@@ -153,9 +175,50 @@ void Renderer::drawText(const Character& character, glm::vec2 position)
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
-void Renderer::drawText(std::string text, glm::vec2 pos, float scale, glm::vec3 color)
+void Renderer::drawText(std::string text, Text& textObject, glm::vec2 pos, float scale, glm::vec3 color)
+{
+	shaders[INSTANCE_TEXT].use();
+	glActiveTexture(GL_TEXTURE0);
+	textObject.batchedCharactersTexture.bind();
+	shaders[INSTANCE_TEXT].setInteger("text", 0);
+	shaders[INSTANCE_TEXT].setVector3f("textColor", color);
+	shaders[INSTANCE_TEXT].setVector2f("texSize", textObject.batchedCharactersTexture.width, textObject.batchedCharactersTexture.height);
+	textInstanceBuffer.bind();
+
+	Vertex1 instanceData;
+	//instanceData.texInfo.z = textObject.batchedCharactersTexture.width;
+	//instanceData.texInfo.w = textObject.batchedCharactersTexture.height;
+	std::string::const_iterator c;
+	for (c = text.begin(); c != text.end(); c++)
+	{
+		CharacterBatched bc = textObject.batchedCharacters[*c];
+		int xTranslation = pos.x + bc.bearing.x;
+		int yTranslation = pos.y - (bc.size.y - bc.bearing.y);
+		instanceData.transform = glm::mat4(1.0f);
+		instanceData.transform = glm::translate(instanceData.transform, glm::vec3(xTranslation, yTranslation, 0));
+		instanceData.transform = glm::scale(instanceData.transform, glm::vec3(bc.size.x, bc.size.y, 0));
+		instanceData.texInfo.x = bc.pos.x;
+		instanceData.texInfo.y = bc.pos.y;
+		instanceData.texInfo.z = bc.size.x;
+		instanceData.texInfo.w = bc.size.y;
+		textInstanceBuffer.pushVertex(instanceData);
+		pos.x += (bc.advance >> 6);
+	}
+
+	textInstanceBuffer.flush();
+}
+
+void Renderer::testDrawText(Texture& batchedTexture, glm::vec2 size, glm::vec2 position)
 {
 	shaders[SINGLE_TEXT].use();
 	glActiveTexture(GL_TEXTURE0);
-
+	batchedTexture.bind();
+	shaders[SINGLE_TEXT].setInteger("text", 0);
+	shaders[SINGLE_TEXT].setVector3f("textColor", 1.0f, 1.0f, 1.0f);
+	glm::mat4 model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(position.x, position.y, 0));
+	model = glm::scale(model, glm::vec3(size.x, size.y, 1));
+	shaders[SINGLE_TEXT].setMatrix4("model", model, false);
+	textBuffer.bind();
+	glDrawArrays(GL_TRIANGLES, 0, 6);
 }

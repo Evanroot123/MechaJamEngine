@@ -55,6 +55,53 @@ void main()
 }
 )";
 
+const char* instanceGlyphVertexShader = R"(
+#version 330 core
+layout(location = 0) in vec4 vertex;
+layout(location = 1) in vec4 texInfo;
+layout (location = 2) in mat4 model;
+out vec2 texCoords;
+
+uniform mat4 view;
+uniform mat4 projection;
+uniform vec2 texSize;
+
+void main()
+{
+	gl_Position = projection * view * model * vec4(vertex.xy, 0.0, 1.0);
+
+	// offset
+	texCoords = vertex.zw + texInfo.xy;
+
+	// adjust for size based on uv coord
+	texCoords.x += vertex.z * texInfo.z;
+	texCoords.y += vertex.w * texInfo.w;
+
+	// normalize
+	texCoords.x /= texSize.x;
+	texCoords.y /=  texSize.y;
+	
+	// put into center of texel based on uv coord
+	//texCoords.x += 1.0 / texSize.x * 0.5;
+	//texCoords.y += 1.0 / texSize.y * 0.5;
+}
+)";
+
+const char* instanceGlyphFragmentShader = R"(
+#version 330 core
+in vec2 texCoords;
+out vec4 color;
+
+uniform sampler2D text;
+uniform vec3 textColor;
+
+void main()
+{
+	vec4 sampled = vec4(1.0, 1.0, 1.0, texture(text, texCoords).r);
+	color = vec4(textColor, 1.0) * sampled;
+}
+)";
+
 const char* singleSpriteVertex = R"(
 #version 330 core
 layout (location = 0) in vec4 vertex;

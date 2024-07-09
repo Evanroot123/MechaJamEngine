@@ -10,8 +10,6 @@ public:
 	bool canFit(int inputWidth, int inputHeight, int posX, int posY);
 
 	unsigned char* data;
-
-private:
 	int width;
 	int height;
 };

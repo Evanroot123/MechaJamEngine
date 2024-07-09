@@ -1,9 +1,9 @@
 #pragma once
 
 #include <glad/glad.h>
-
 #include <ft2build.h>
 #include FT_FREETYPE_H
+#include "rectangle.hpp"
 
 class Texture
 {
@@ -22,6 +22,6 @@ public:
 	Texture();
 	void generate(unsigned int width, unsigned int height, unsigned char* data);
 	void generateText(FT_Face& face);
-	void generateText2(FT_Face& face);
+	void generateText2(Rectangle& rectangle);
 	void bind() const;
 };

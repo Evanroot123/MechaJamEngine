@@ -35,7 +35,8 @@ int main()
 	ResourceManager::loadTexture("resources\\textures\\green-circle.png", true, "shiboopy");
 	
 	Text text;
-	text.loadCharacters();
+	//text.loadCharacters();
+	text.loadBatchedCharacters();
 
 	GameObject shiboopy;
 	shiboopy.posX = 50;
@@ -70,14 +71,16 @@ int main()
 		//ImGui::End();
 		//endFrameImGui();
 
-		renderer.drawText(text.characters['a'], {50, 50});
+		//renderer.drawText(text.characters['a'], {50, 50});
+		//renderer.testDrawText(text.batchedCharactersTexture, { 512, 512 }, { 400, 300 });
+		renderer.drawText("Q", text, { 300, 400 }, 1.0f, { 0.7, 0.7, 0.7 });
 
 		//sw.start();
 		//for (const GameObject& obj : objects)
 		//{
 		//	renderer.drawSprite(obj);
 		//}
-		////renderer.drawBatched(objects);
+		//renderer.drawBatched(objects);
 		//sw.stop();
 		//std::cout << std::fixed;
 		//std::cout << "elapsed microseconds: " << sw.elapsedMicroseconds() << std::endl;

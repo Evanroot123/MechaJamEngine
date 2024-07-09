@@ -3,8 +3,6 @@
 #include <iostream>
 #include <vector>
 #include "texture.hpp"
-#include "rectangle.hpp"
-
 
 Texture::Texture()
 	: width(0), height(0), internalFormat(GL_RGB), imageFormat(GL_RGB), wrapS(GL_REPEAT), wrapT(GL_REPEAT), filterMin(GL_LINEAR), filterMax(GL_LINEAR)
@@ -77,7 +75,7 @@ void Texture::generateText(FT_Face& face)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 }
 
-void Texture::generateText2(FT_Face& face)
+void Texture::generateText2(Rectangle& rectangle)
 {
 	if (currentUnpackAlignment != 1)
 	{
@@ -85,17 +83,17 @@ void Texture::generateText2(FT_Face& face)
 		glPixelStorei(GL_UNPACK_ALIGNMENT, currentUnpackAlignment);
 	}
 
-	width = face->glyph->bitmap.width * 2;
-	height = face->glyph->bitmap.rows;
+	width = rectangle.width;
+	height = rectangle.height;
 
-	Rectangle rectangle{ (int)width, (int)height };
-	rectangle.insertData(face->glyph->bitmap.buffer, face->glyph->bitmap.width, height, 0, 0);
-	rectangle.insertData(face->glyph->bitmap.buffer, face->glyph->bitmap.width, height, face->glyph->bitmap.width, 0);
+	//Rectangle rectangle{ (int)width, (int)height };
+	//rectangle.insertData(face->glyph->bitmap.buffer, face->glyph->bitmap.width, height, 0, 0);
+	//rectangle.insertData(face->glyph->bitmap.buffer, face->glyph->bitmap.width, height, face->glyph->bitmap.width, 0);
 
 	glBindTexture(GL_TEXTURE_2D, id);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, face->glyph->bitmap.width * 2, face->glyph->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE, rectangle.data);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, width, height, 0, GL_RED, GL_UNSIGNED_BYTE, rectangle.data);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 }
