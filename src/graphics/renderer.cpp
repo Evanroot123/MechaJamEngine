@@ -72,7 +72,7 @@ void Renderer::init(Window* window)
 	instanceBuffer.generate(vertices, sizeof(vertices) / sizeof(vertices[0]));
 	instanceBuffer.attributePointerMat4(1, 0);
 	textInstanceBuffer.generate(textVertices, sizeof(textVertices) / sizeof(textVertices[0]));
-	textInstanceBuffer.attributePointer(1, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+	textInstanceBuffer.attributePointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex1), (void*)0);
 	textInstanceBuffer.attributePointerMat4(2, sizeof(float) * 4);
 	
 

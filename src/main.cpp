@@ -73,7 +73,8 @@ int main()
 
 		//renderer.drawText(text.characters['a'], {50, 50});
 		//renderer.testDrawText(text.batchedCharactersTexture, { 512, 512 }, { 400, 300 });
-		renderer.drawText("Q", text, { 300, 400 }, 1.0f, { 0.7, 0.7, 0.7 });
+		renderer.drawText("hello there how are you doing?", text, { 300, 400 }, 1.0f, { 0.7, 0.7, 0.7 });
+		//renderer.drawText("S", text, { 310, 400 }, 1.0f, { 0.7, 0.7, 0.7 });
 
 		//sw.start();
 		//for (const GameObject& obj : objects)

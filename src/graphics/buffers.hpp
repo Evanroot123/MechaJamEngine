@@ -86,7 +86,7 @@ public:
 		for (int i = 0; i < 4; i++)
 		{
 			glEnableVertexAttribArray(index + i);
-			glVertexAttribPointer(index + i, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(sizeof(glm::vec4) * i + offset));
+			glVertexAttribPointer(index + i, 4, GL_FLOAT, GL_FALSE, sizeof(T), (void*)(sizeof(glm::vec4) * i + offset));
 			glVertexAttribDivisor(index + i, 1);
 		}
 	}

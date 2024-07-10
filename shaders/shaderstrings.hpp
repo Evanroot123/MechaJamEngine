@@ -69,6 +69,7 @@ uniform vec2 texSize;
 void main()
 {
 	gl_Position = projection * view * model * vec4(vertex.xy, 0.0, 1.0);
+	//texCoords = vertex.zw;	
 
 	// offset
 	texCoords = vertex.zw + texInfo.xy;
