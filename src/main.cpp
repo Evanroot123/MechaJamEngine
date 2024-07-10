@@ -6,6 +6,7 @@
 #include "resourcemanager.hpp"
 #include "stopwatch.hpp"
 #include "text.hpp"
+#include "teststrings.hpp"
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -25,7 +26,7 @@ void endFrameImGui() {
 int main()
 {
 	Window window;
-	window.init(800, 600);
+	window.init(1920, 1080);
     
 	Renderer renderer;
 	renderer.init(&window);
@@ -34,7 +35,7 @@ int main()
 	StopWatch sw;
 	ResourceManager::loadTexture("resources\\textures\\green-circle.png", true, "shiboopy");
 	
-	Text text;
+	Text text{ 24 };
 	//text.loadCharacters();
 	text.loadBatchedCharacters();
 
@@ -73,7 +74,19 @@ int main()
 
 		//renderer.drawText(text.characters['a'], {50, 50});
 		//renderer.testDrawText(text.batchedCharactersTexture, { 512, 512 }, { 400, 300 });
-		renderer.drawText("hello there how are you doing?", text, { 300, 400 }, 1.0f, { 0.7, 0.7, 0.7 });
+		
+
+
+		sw.start();
+		renderer.drawText(loremIpsum, text, { 0, 1032 }, 1.0f, { 0.7, 0.7, 0.7 });
+		sw.stop();
+		std::cout << std::fixed;
+		std::cout << "elapsed microseconds: " << sw.elapsedMicroseconds() << std::endl;
+
+		//renderer.drawText("Q", text, { 300, 400 }, 1.0f, { 0.7, 0.7, 0.7 });
+		//renderer.drawText("e", text, { 300, 400 }, 1.0f, { 0.7, 0.7, 0.7 });
+		//renderer.drawText("l", text, { 300, 400 }, 1.0f, { 0.7, 0.7, 0.7 });
+
 		//renderer.drawText("S", text, { 310, 400 }, 1.0f, { 0.7, 0.7, 0.7 });
 
 		//sw.start();

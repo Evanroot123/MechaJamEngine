@@ -21,8 +21,11 @@ struct CharacterBatched {
 class Text
 {
 public:
+	Text(int pixelHeight = 48);
 	void loadCharacters();
 	void loadBatchedCharacters();
+
+	int pixelHeight = 48;
 	std::map<char, Character> characters;
 	std::map<char, CharacterBatched> batchedCharacters;
 	Texture batchedCharactersTexture;

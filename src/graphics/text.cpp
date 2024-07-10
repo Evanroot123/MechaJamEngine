@@ -5,6 +5,11 @@
 #include <glad/glad.h>
 #include "rectangle.hpp"
 
+Text::Text(int pixelHeight) : pixelHeight(pixelHeight)
+{
+
+}
+
 void Text::loadCharacters()
 {
 	const char* fontFile = "resources/fonts/arial.ttf";
@@ -22,7 +27,7 @@ void Text::loadCharacters()
 		return;
 	}
 
-	FT_Set_Pixel_Sizes(face, 0, 48);
+	FT_Set_Pixel_Sizes(face, 0, pixelHeight);
 	if (FT_Load_Char(face, 'X', FT_LOAD_RENDER))
 	{
 		return;
@@ -66,7 +71,7 @@ void Text::loadBatchedCharacters()
 		return;
 	}
 
-	FT_Set_Pixel_Sizes(face, 0, 48);
+	FT_Set_Pixel_Sizes(face, 0, pixelHeight);
 	if (FT_Load_Char(face, 'X', FT_LOAD_RENDER))
 	{
 		return;
@@ -77,7 +82,7 @@ void Text::loadBatchedCharacters()
 	int currentX = 0;
 	int currentY = 0;
 
-	for (unsigned char c = 33; c < 128; c++)
+	for (unsigned char c = 32; c < 128; c++)
 	{
 		if (FT_Load_Char(face, c, FT_LOAD_RENDER))
 		{

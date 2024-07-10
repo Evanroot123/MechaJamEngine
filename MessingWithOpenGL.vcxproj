@@ -177,6 +177,7 @@
     <ClInclude Include="src\platform\window.hpp" />
     <ClInclude Include="src\utility\rectangle.hpp" />
     <ClInclude Include="src\utility\stopwatch.hpp" />
+    <ClInclude Include="src\utility\teststrings.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

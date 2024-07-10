@@ -180,20 +180,39 @@ void Renderer::drawText(std::string text, Text& textObject, glm::vec2 pos, float
 	//instanceData.texInfo.z = textObject.batchedCharactersTexture.width;
 	//instanceData.texInfo.w = textObject.batchedCharactersTexture.height;
 	std::string::const_iterator c;
+
+	int lineWidth = pos.x;
+	int lineHeight = pos.y;
 	for (c = text.begin(); c != text.end(); c++)
 	{
 		CharacterBatched bc = textObject.batchedCharacters[*c];
-		int xTranslation = pos.x + bc.bearing.x;
-		int yTranslation = pos.y - (bc.size.y - bc.bearing.y);
+
+		if (*c == ' ')
+		{
+			lineWidth += (bc.advance >> 6);
+			continue;
+		}
+		if (*c == '\n')
+		{
+			lineWidth = pos.x;
+			lineHeight -= textObject.pixelHeight;
+			continue;
+		}
+
+		int xpos = lineWidth + bc.bearing.x;
+		int ypos = lineHeight - (bc.size.y - bc.bearing.y);
+		// adjust for center
+		xpos += bc.size.x / 2;
+		ypos += bc.size.y / 2;
 		instanceData.transform = glm::mat4(1.0f);
-		instanceData.transform = glm::translate(instanceData.transform, glm::vec3(xTranslation, yTranslation, 0));
+		instanceData.transform = glm::translate(instanceData.transform, glm::vec3(xpos, ypos, 0));
 		instanceData.transform = glm::scale(instanceData.transform, glm::vec3(bc.size.x, bc.size.y, 0));
 		instanceData.texInfo.x = bc.pos.x;
 		instanceData.texInfo.y = bc.pos.y;
 		instanceData.texInfo.z = bc.size.x;
 		instanceData.texInfo.w = bc.size.y;
 		textInstanceBuffer.pushVertex(instanceData);
-		pos.x += (bc.advance >> 6);
+		lineWidth += (bc.advance >> 6);
 	}
 
 	textInstanceBuffer.flush();
