@@ -91,7 +91,7 @@ public:
 		}
 	}
 
-	void pushVertex(T& vertex)
+	void pushVertex(const T& vertex)
 	{
 		if (vertexCount >= vertexCapacity)
 			flush();

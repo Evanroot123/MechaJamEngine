@@ -80,7 +80,7 @@ void main()
 
 	// normalize
 	texCoords.x /= texSize.x;
-	texCoords.y /=  texSize.y;
+	texCoords.y /= texSize.y;
 	
 	// put into center of texel based on uv coord
 	//texCoords.x += 1.0 / texSize.x * 0.5;
@@ -158,6 +158,58 @@ uniform sampler2D image;
 void main()
 {
 	color = texture(image, texCoords);
+}
+)";
+
+const char* tileMapVertex = R"(
+#version 430 core
+layout(location = 0) in vec4 vertex;
+layout(location = 1) in vec2 tilePos;
+out vec2 texCoords;
+
+uniform mat4 view;
+uniform mat4 projection;
+uniform vec2 gridPos;
+uniform vec2 texSize;
+uniform ivec2 gridSize;
+uniform int gridWidthPixels;
+uniform int gridHeightPixels;
+
+void main()
+{
+	float xpos = vertex.x * gridWidthPixels;
+	float ypos = vertex.y * gridHeightPixels;
+	xpos += (gl_InstanceID % gridSize.x) * gridWidthPixels + gridPos.x;
+	ypos += floor(gl_InstanceID / gridSize.y) * gridHeightPixels + gridPos.y;
+
+	//float xpos = vertex.x + (gl_InstanceID % gridSize.x) * gridWidthPixels + gridPos.x;
+	//float ypos = vertex.y + floor(gl_InstanceID / gridSize.y) * gridHeightPixels + gridPos.y;
+	gl_Position = projection * view * vec4(xpos, ypos, 0.0, 1.0);
+
+	texCoords = vertex.zw;
+	// offset
+	//texCoords = vertex.zw + tilePos.xy;
+
+	// adjust for size based on uv coord
+	//texCoords.x += vertex.z * gridWidthPixels;
+	//texCoords.y += vertex.w * gridHeightPixels;
+
+	// normalize
+	//texCoords.x /= texSize.x;
+	//texCoords.y /= texSize.y;
+}
+)";
+
+const char* tileMapFragment = R"(
+#version 430 core
+in vec2 texCoords;
+out vec4 color;
+
+uniform sampler2D tileset;
+
+void main()
+{
+	color = texture(tileset, texCoords);
 }
 )";
 

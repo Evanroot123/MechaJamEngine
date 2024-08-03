@@ -151,7 +151,10 @@
     <ClCompile Include="dependencies\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="dependencies\imgui\imgui_tables.cpp" />
     <ClCompile Include="dependencies\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="src\game\camera.cpp" />
+    <ClCompile Include="src\game\datainitialization.cpp" />
     <ClCompile Include="src\game\gameobject.cpp" />
+    <ClCompile Include="src\game\grid.cpp" />
     <ClCompile Include="src\graphics\buffers.cpp" />
     <ClCompile Include="src\graphics\debugging.cpp" />
     <ClCompile Include="src\graphics\renderer.cpp" />
@@ -165,7 +168,10 @@
     <ClCompile Include="src\utility\stopwatch.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\game\camera.hpp" />
+    <ClInclude Include="src\game\datainitialization.h" />
     <ClInclude Include="src\game\gameobject.hpp" />
+    <ClInclude Include="src\game\grid.hpp" />
     <ClInclude Include="src\graphics\buffers.hpp" />
     <ClInclude Include="src\graphics\debugging.hpp" />
     <ClInclude Include="src\graphics\renderer.hpp" />

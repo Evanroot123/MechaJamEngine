@@ -9,5 +9,5 @@ struct Vertex1
 
 struct Vertex2
 {
-	glm::mat4 transform;
+	glm::vec2 texPos; // only need texPos because grid textures are all the same size
 };

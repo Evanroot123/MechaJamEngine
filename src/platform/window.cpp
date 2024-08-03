@@ -5,9 +5,18 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
+static bool scrolled = false;
+static double scroll = 0.0f;
+
 void framebufferSizeCallback(GLFWwindow* window, int width, int height)
 {
 	glViewport(0, 0, width, height);
+}
+
+void scrollCallback(GLFWwindow* window, double xoffset, double yoffset)
+{
+	scrolled = true;
+	scroll = yoffset;
 }
 
 void Window::init(int width, int height)
@@ -27,6 +36,10 @@ void Window::init(int width, int height)
 	}
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
+	glfwSetScrollCallback(window, scrollCallback);
+
+	// set sticky keys
+	glfwSetInputMode(window, GLFW_STICKY_KEYS, GLFW_TRUE);
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
@@ -55,10 +68,31 @@ bool Window::isOpen()
 	return !glfwWindowShouldClose(window);
 }
 
-void Window::processInput()
+void Window::processInput(Camera& camera)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
+
+	static double cursorX, cursorY;
+	
+	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE))
+	{
+		double currentX, currentY;
+		glfwGetCursorPos(window, &currentX, &currentY);
+		camera.pan(currentX - cursorX, currentY - cursorY);
+		cursorX = currentX;
+		cursorY = currentY;
+	}
+	else
+	{
+		glfwGetCursorPos(window, &cursorX, &cursorY);
+	}
+
+	if (scrolled)
+	{
+		camera.zoom(scroll);
+		scrolled = false;
+	}
 }
 
 void Window::swapBuffers()
@@ -71,3 +105,4 @@ void Window::terminate()
 {
 	glfwTerminate();
 }
+

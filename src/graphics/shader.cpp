@@ -58,6 +58,20 @@ void Shader::setInteger(const char* name, int value, bool useShader)
 	glUniform1i(glGetUniformLocation(this->id, name), value);
 }
 
+void Shader::setVector2i(const char* name, int x, int y, bool useShader)
+{
+	if (useShader)
+		this->use();
+	glUniform2i(glGetUniformLocation(this->id, name), x, y);
+}
+
+void Shader::setVector2i(const char* name, const glm::ivec2& value, bool useShader)
+{
+	if (useShader)
+		this->use();
+	glUniform2i(glGetUniformLocation(this->id, name), value.x, value.y);
+}
+
 void Shader::setVector2f(const char* name, float x, float y, bool useShader)
 {
 	if (useShader)

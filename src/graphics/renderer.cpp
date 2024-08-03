@@ -3,6 +3,7 @@
 #include <glad/glad.h>
 #include "debugging.hpp"
 #include "shaderstrings.hpp"
+#include "camera.hpp"
 
 void Renderer::getGPUInfo()
 {
@@ -46,6 +47,8 @@ void Renderer::init(Window* window)
 	shaders.push_back(shader);
 	shader.compile(instancedSpriteVertex, instancedSpriteFragment);
 	shaders.push_back(shader);
+	shader.compile(tileMapVertex, tileMapFragment);
+	shaders.push_back(shader);
 
 	float vertices[] = {
 		-0.5f, 0.5f, 0.0f, 1.0f,
@@ -74,27 +77,27 @@ void Renderer::init(Window* window)
 	textInstanceBuffer.generate(textVertices, sizeof(textVertices) / sizeof(textVertices[0]));
 	textInstanceBuffer.attributePointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex1), (void*)0);
 	textInstanceBuffer.attributePointerMat4(2, sizeof(float) * 4);
-	
-
-	// make instanced text buffer
+	gridInstanceBuffer.generate(vertices, sizeof(vertices) / sizeof(vertices[0]));
+	gridInstanceBuffer.attributePointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex2), (void*)0);
 }
 
 void Renderer::clear()
 {
-	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+	//glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+	glClearColor(0.7f, 0.7f, 0.7f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void Renderer::startFrame()
+void Renderer::startFrame(Camera& camera)
 {
 	//glEnable(GL_CULL_FACE);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	shaders[SINGLE_SPRITE].use();
 	glm::mat4 view = glm::mat4(1.0f);
-	view = glm::translate(view, glm::vec3(cameraPosition.x, cameraPosition.y, 0));
+	view = glm::translate(view, glm::vec3(camera.pos.x + ((float)window->screenWidth * 0.5 * camera.zoomLevel), camera.pos.y + ((float)window->screenHeight * 0.5 * camera.zoomLevel), 0));
 	shaders[SINGLE_SPRITE].setMatrix4("view", view, false);
-	glm::mat4 projection = glm::ortho(0.0f, (float)window->screenWidth, 0.0f, (float)window->screenHeight, -1.0f, 1.0f);
+	glm::mat4 projection = glm::ortho(0.0f, (float)window->screenWidth * camera.zoomLevel, 0.0f, (float)window->screenHeight * camera.zoomLevel, -1.0f, 1.0f);
 	shaders[SINGLE_SPRITE].setMatrix4("projection", projection, false);
 
 	shaders[INSTANCE_SPRITE].use();
@@ -108,6 +111,10 @@ void Renderer::startFrame()
 	shaders[INSTANCE_TEXT].use();
 	shaders[INSTANCE_TEXT].setMatrix4("view", view, false);
 	shaders[INSTANCE_TEXT].setMatrix4("projection", projection, false);
+
+	shaders[SQUARE_GRID].use();
+	shaders[SQUARE_GRID].setMatrix4("view", view, false);
+	shaders[SQUARE_GRID].setMatrix4("projection", projection, false);
 }
 
 void Renderer::endFrame()
@@ -231,4 +238,31 @@ void Renderer::testDrawText(Texture& batchedTexture, glm::vec2 size, glm::vec2 p
 	shaders[SINGLE_TEXT].setMatrix4("model", model, false);
 	textBuffer.bind();
 	glDrawArrays(GL_TRIANGLES, 0, 6);
+}
+
+void Renderer::drawGrid(const Grid& grid, glm::vec2 gridPosition)
+{
+	shaders[SQUARE_GRID].use();
+	glActiveTexture(GL_TEXTURE0);
+	grid.texture->bind();
+	shaders[SQUARE_GRID].setInteger("tileset", 0);
+	shaders[SQUARE_GRID].setVector2f("gridPos", glm::vec2{ gridPosition.x, gridPosition.y });
+	shaders[SQUARE_GRID].setVector2f("texSize", glm::vec2{ grid.texture->width, grid.texture->height});
+	shaders[SQUARE_GRID].setVector2i("gridSize", glm::ivec2{grid.width, grid.height});
+	shaders[SQUARE_GRID].setInteger("gridWidthPixels", grid.tileWidth);
+	shaders[SQUARE_GRID].setInteger("gridHeightPixels", grid.tileHeight);
+	gridInstanceBuffer.bind();
+
+	// loop thru tiles in grid
+	for (int i = 0; i < grid.width; i++)
+	{
+		for (int j = 0; j < grid.height; j++)
+		{
+			// the instance data is the uv positions for each tile in the tilemap atlas
+			// there might be a better and simpler way to do this
+			gridInstanceBuffer.pushVertex(grid.tileTypeToTexPos.at(grid.at(i, j)->type));
+		}
+	}
+
+	gridInstanceBuffer.flush();
 }
