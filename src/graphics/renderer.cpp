@@ -251,8 +251,11 @@ void Renderer::drawGrid(const Grid& grid, glm::vec2 gridPosition)
 	shaders[SQUARE_GRID].setVector2i("gridSize", glm::ivec2{grid.width, grid.height});
 	shaders[SQUARE_GRID].setInteger("gridWidthPixels", grid.tileWidth);
 	shaders[SQUARE_GRID].setInteger("gridHeightPixels", grid.tileHeight);
+	shaders[SQUARE_GRID].setInteger("instanceNum", 0);
 	gridInstanceBuffer.bind();
 
+	int instanceCounter = -1;
+	int vertexCount = 0;
 	// loop thru tiles in grid
 	for (int i = 0; i < grid.width; i++)
 	{
@@ -261,6 +264,15 @@ void Renderer::drawGrid(const Grid& grid, glm::vec2 gridPosition)
 			// the instance data is the uv positions for each tile in the tilemap atlas
 			// there might be a better and simpler way to do this
 			gridInstanceBuffer.pushVertex(grid.tileTypeToTexPos.at(grid.at(i, j)->type));
+
+			// maybe figure out a better way to handle this in the future
+			vertexCount++;
+			if (vertexCount >= gridInstanceBuffer.vertexCapacity)
+			{
+				instanceCounter++;
+				vertexCount = 0;
+				shaders[SQUARE_GRID].setInteger("instanceNum", instanceCounter * gridInstanceBuffer.vertexCapacity);
+			}
 		}
 	}
 

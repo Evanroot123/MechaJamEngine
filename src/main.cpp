@@ -46,7 +46,7 @@ int main()
 	text.loadBatchedCharacters();
 
 	GameObject shiboopy{ 50, 50, &ResourceManager::textures.at("sample_tile") };
-	Grid testGrid{ 20, 20, 64, 64, &ResourceManager::textures.at("sample_tile") };
+	Grid testGrid{ 200, 200, 64, 64, &ResourceManager::textures.at("sample_tile") };
 	initializeTileMapTexturePos(testGrid);
     
 	while (window.isOpen())

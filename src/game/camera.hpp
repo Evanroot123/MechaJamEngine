@@ -8,7 +8,7 @@ public:
 	glm::vec2 pos;
 	float zoomLevel = 1.0f;
 	float maxZoomIn = 0.1f;
-	float maxZoomOut = 3.0f;
+	float maxZoomOut = 10.0f;
 	float standardZoom = 1.0f;
 
 	Camera();

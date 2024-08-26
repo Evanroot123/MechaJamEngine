@@ -22,6 +22,7 @@ public:
 	unsigned int vao;
 	unsigned int vbo;
 	int vertexCount = 0;
+	int vertexCapacity = 10000;
 
 	BatchedBuffer();
 	~BatchedBuffer();
@@ -32,7 +33,6 @@ public:
 	void bind();
 
 private:
-	int vertexCapacity = 10000;
 	glm::mat4* vertexData;
 };
 
@@ -44,9 +44,9 @@ public:
 	unsigned int vertexVbo = 0;
 	unsigned int instanceVbo = 0;
 	int vertexCount = 0;
+	int vertexCapacity = 10000;
 
 private:
-	int vertexCapacity = 10000;
 	T* vertexData;
 
 public:

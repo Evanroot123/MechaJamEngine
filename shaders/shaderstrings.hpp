@@ -174,13 +174,14 @@ uniform vec2 texSize;
 uniform ivec2 gridSize;
 uniform int gridWidthPixels;
 uniform int gridHeightPixels;
+uniform int instanceNum;
 
 void main()
 {
 	float xpos = vertex.x * gridWidthPixels;
 	float ypos = vertex.y * gridHeightPixels;
-	xpos += (gl_InstanceID % gridSize.x) * gridWidthPixels + gridPos.x;
-	ypos += floor(gl_InstanceID / gridSize.y) * gridHeightPixels + gridPos.y;
+	xpos += ((gl_InstanceID + instanceNum) % gridSize.x) * gridWidthPixels + gridPos.x;
+	ypos += floor((gl_InstanceID + instanceNum) / gridSize.y) * gridHeightPixels + gridPos.y;
 
 	//float xpos = vertex.x + (gl_InstanceID % gridSize.x) * gridWidthPixels + gridPos.x;
 	//float ypos = vertex.y + floor(gl_InstanceID / gridSize.y) * gridHeightPixels + gridPos.y;
